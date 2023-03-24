@@ -78,7 +78,7 @@ router.get("/buscar/:id", verificarTokenAdmin, async (req, res) => {
 
 // Listar todos os usuários
 
-router.get("/", verificarTokenAdmin, async (req, res) => {
+router.get("/all", verificarTokenAdmin, async (req, res) => {
   const query = req.query.new;
   try {
     const usuarios = query
@@ -89,5 +89,13 @@ router.get("/", verificarTokenAdmin, async (req, res) => {
     res.status(500).json({ mensagem: `${erro}` });
   }
 });
+
+// Rota OPTIONS retorna as opções disponíveis para o recurso
+
+router.options('/:id', (req, res) => {
+  res.header('Allow', 'GET,PUT,PATCH,DELETE,OPTIONS').send();
+});
+
+
 
 module.exports = router;
