@@ -59,12 +59,12 @@ router.post("/login", async (req, res) => {
   const usuario = await Usuario.findOne({ email: email });
   if (!usuario) {
     return res
-      .status(422)
-      .json({ mensagem: "usuário não possui cadastro" });
+      .status(404)
+      .json({ mensagem: "usuário não encontrado" });
   }
 
   // checando a senha do usuário
-  const checkSenha = bcrypt.compare(senha, usuario.senha);
+  const checkSenha = await bcrypt.compare(senha, usuario.senha);
 
   if (!checkSenha) {
     return res.status(422).json({ mensagem: "senha inválida" });
