@@ -14,7 +14,7 @@ router.post("/new", verificarToken, async (req, res) => {
 
   try {
     await novaTarefa.save();
-    res.status(500).json({ mensagem: "Tarefa cadastrada com sucesso" });
+    res.status(201).json({ mensagem: "Tarefa cadastrada com sucesso" });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -59,17 +59,38 @@ router.get("/:status", verificarToken, async (req, res) => {
   }
 });
 
-router.get("/insights", verificarTokenAdmin, async (req, res) => {
+// middleware para manipulação de solicitações HEAD
+router.head("/:status", async (req, res) => {
+  try {
+    const tarefas = await Tarefa.find();
+    // define os cabeçalhos de resposta HTTP
+    res.set({
+      "Content-Type": "application/json",
+      "Content-Length": JSON.stringify(tarefas).length,
+    });
+    res.status(200).end();
+  } catch (error) {
+    res.status(500).end();
+  }
+});
+
+router.get("/info/admin", verificarTokenAdmin,async (req, res) => {
   try {
     const totalTarefas = await Tarefa.countDocuments();
     const tarefasFinalizadas = await Tarefa.countDocuments({
       finalizado: true,
     });
-    res.status(200).json({ totalTarefas, tarefasFinalizadas });
+    const tarefasNaoFinalizadas = totalTarefas - tarefasFinalizadas;
+    res.status(200).json({
+      totalTarefas,
+      tarefasFinalizadas,
+      tarefasNaoFinalizadas
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Erro ao buscar tarefas no banco de dados." });
+    res.status(500).json({
+      message: "Erro ao buscar tarefas no banco de dados.",
+      error: error.message
+    });
   }
 });
 
