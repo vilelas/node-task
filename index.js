@@ -1,6 +1,7 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
+const chalk = require("chalk");
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -11,9 +12,9 @@ const tarefaRoute = require("./routes/tarefa");
 const connect = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URL);
-    console.log("Conectado com o banco de dados!");
+    console.log(chalk.bgGreen("Conectado com o banco de dados!"));
   } catch (error) {
-    console.log(error);
+    console.log(chalk.bgRed(error));
   }
 };
 
@@ -27,5 +28,5 @@ app.use("/api/usuarios", usuariosRoute);
 app.use("/api/tarefa", tarefaRoute);
 
 app.listen(5000, () => {
-  console.log("O servidor está rodando!");
+  console.log(chalk.bgBlue("O servidor está rodando!"));
 });
