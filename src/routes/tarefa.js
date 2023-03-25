@@ -3,7 +3,7 @@ const {
   verificarTokenEAutorizar,
   verificarTokenAdmin,
   verificarTokenETarefaDoUsuario,
-} = require("./verificarToken");
+} = require("../middlewares/verificarToken");
 
 const Tarefa = require("../models/Tarefa");
 const router = require("express").Router();
@@ -60,20 +60,6 @@ router.get("/:status", verificarTokenETarefaDoUsuario, async (req, res) => {
   }
 });
 
-// middleware para manipulação de solicitações HEAD
-router.head("/:status", async (req, res) => {
-  try {
-    const tarefas = await Tarefa.find();
-    // define os cabeçalhos de resposta HTTP
-    res.set({
-      "Content-Type": "application/json",
-      "Content-Length": JSON.stringify(tarefas).length,
-    });
-    res.status(200).end();
-  } catch (error) {
-    res.status(500).end();
-  }
-});
 
 router.get("/info/admin", verificarTokenAdmin, async (req, res) => {
   try {

@@ -3,7 +3,7 @@ const {
   verificarTokenEAutorizar,
   verificarTokenAdmin,
   verificarTokenETarefaDoUsuario,
-} = require("./verificarToken");
+} = require("../middlewares/verificarToken");
 
 const bcrypt = require("bcrypt");
 const Usuario = require("../models/Usuario");
@@ -88,12 +88,6 @@ router.get("/all", verificarTokenAdmin, async (req, res) => {
   } catch (erro) {
     res.status(500).json({ mensagem: `${erro}` });
   }
-});
-
-// Rota OPTIONS retorna as opções disponíveis para o recurso
-
-router.options("/:id", (req, res) => {
-  res.header("Allow", "GET,PUT,PATCH,DELETE,OPTIONS").send();
 });
 
 module.exports = router;
