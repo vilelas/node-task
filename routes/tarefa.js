@@ -23,7 +23,7 @@ router.post("/new", verificarToken, async (req, res) => {
 
 // Atualizar tarefa
 
-router.put("/tarefas/:id", verificarTokenETarefaDoUsuario, async (req, res) => {
+router.put("/:id", verificarTokenETarefaDoUsuario, async (req, res) => {
   try {
     await Tarefa.findByIdAndUpdate(
       req.params.id,
