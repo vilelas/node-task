@@ -2,12 +2,12 @@ const {
   verificarToken,
   verificarTokenEAutorizar,
   verificarTokenAdmin,
+  verificarTokenETarefaDoUsuario,
 } = require("./verificarToken");
 
 const bcrypt = require("bcrypt");
 const Usuario = require("../models/Usuario");
 const router = require("express").Router();
-
 
 // Atualizar dados parciais
 
@@ -92,10 +92,8 @@ router.get("/all", verificarTokenAdmin, async (req, res) => {
 
 // Rota OPTIONS retorna as opções disponíveis para o recurso
 
-router.options('/:id', (req, res) => {
-  res.header('Allow', 'GET,PUT,PATCH,DELETE,OPTIONS').send();
+router.options("/:id", (req, res) => {
+  res.header("Allow", "GET,PUT,PATCH,DELETE,OPTIONS").send();
 });
-
-
 
 module.exports = router;
