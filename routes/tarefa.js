@@ -2,6 +2,7 @@ const {
   verificarToken,
   verificarTokenEAutorizar,
   verificarTokenAdmin,
+  verificarTokenETarefaDoUsuario,
 } = require("./verificarToken");
 
 const Tarefa = require("../models/Tarefa");
@@ -22,7 +23,7 @@ router.post("/new", verificarToken, async (req, res) => {
 
 // Atualizar tarefa
 
-router.put("/:id", verificarToken, async (req, res) => {
+router.put("/tarefas/:id", verificarTokenETarefaDoUsuario, async (req, res) => {
   try {
     await Tarefa.findByIdAndUpdate(
       req.params.id,
@@ -39,7 +40,7 @@ router.put("/:id", verificarToken, async (req, res) => {
 
 // Excluir
 
-router.delete("/:id", verificarToken, async (req, res) => {
+router.delete("/:id", verificarTokenETarefaDoUsuario, async (req, res) => {
   try {
     await Tarefa.findByIdAndDelete(req.params.id);
     res.status(200).json({ mensagem: "Tarefa excluída com sucesso" });
@@ -50,7 +51,7 @@ router.delete("/:id", verificarToken, async (req, res) => {
 
 // Buscar tarefa por status
 
-router.get("/:status", verificarToken, async (req, res) => {
+router.get("/:status", verificarTokenETarefaDoUsuario, async (req, res) => {
   try {
     const tarefas = await Tarefa.find({ finalizado: req.params.status });
     res.status(200).json({ tarefas });
@@ -74,7 +75,7 @@ router.head("/:status", async (req, res) => {
   }
 });
 
-router.get("/info/admin", verificarTokenAdmin,async (req, res) => {
+router.get("/info/admin", verificarTokenAdmin, async (req, res) => {
   try {
     const totalTarefas = await Tarefa.countDocuments();
     const tarefasFinalizadas = await Tarefa.countDocuments({
@@ -84,12 +85,12 @@ router.get("/info/admin", verificarTokenAdmin,async (req, res) => {
     res.status(200).json({
       totalTarefas,
       tarefasFinalizadas,
-      tarefasNaoFinalizadas
+      tarefasNaoFinalizadas,
     });
   } catch (error) {
     res.status(500).json({
       message: "Erro ao buscar tarefas no banco de dados.",
-      error: error.message
+      error: error.message,
     });
   }
 });
