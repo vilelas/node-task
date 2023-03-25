@@ -5,7 +5,7 @@ NodeTask é uma aplicação de lista de tarefas construída com Node.js e Expres
 A seguir está a lista de todos os endpoints suportados pela API do NodeTask:
 
 | Método | URL | Autenticação | Admin | Descrição |
-| -------- | -------- | -------- | -------- | -------- |
+| :--------: | :--------: | :--------: | :--------: | -------- |
 POST	|``{{URL}}/api/auth/register``|	Não	|Não	|Cadastra um novo usuário no sistema
 POST	|``{{URL}}/api/auth/login``	|Não	|Não|	Realiza o login do usuário e retorna um token
 POST	|``{{URL}}/api/tarefa/new``|	Sim|	Não|	Cadastra uma nova tarefa
