@@ -78,7 +78,7 @@ router.post("/login", async (req, res) => {
         admin: usuario.admin,
       },
       secret,
-      { expiresIn: "3d" }
+      { expiresIn: "1d" }
     );
 
     const { senha, ...info } = usuario._doc;
