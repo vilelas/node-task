@@ -13,7 +13,6 @@ DELETE	|``{{URL}}/api/usuarios/:id``|	Sim|	Sim|	Exclui um usuário específico
 DELETE	|```{{URL}}/api/tarefa/:id```|	Sim|	Sim	|Exclui uma tarefa específica
 PUT	|``{{URL}}/api/usuarios/:id``	|Sim	|Sim	|Atualiza os dados de um usuário específico
 PUT	|``{{URL}}/api/tarefas/:id``	|Sim	|Sim	|Atualiza uma tarefa específica
-GET	|``{{URL}}/api/tarefa/:status``|	Sim	|Sim|	Retorna todas as tarefas com um determinado status
 GET	|``{{URL}}/api/usuarios/buscar/:id``|	Sim|	Sim|	Retorna informações de um usuário específico **(admin apenas)**
 GET	|``{{URL}}/api/usuarios/all``	|Sim|	Sim	|Retorna todos os usuáios cadastrados no sistema **(admin apenas)**
 GET	|``{{URL}}/api/tarefa/info/admin``	|Sim	|Sim	|Retorna o total de tarefas criadas no sistema, o total de tarefas concluídas e o total de tarefas pendente no sistema **(admin apenas)**
