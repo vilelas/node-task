@@ -102,7 +102,7 @@ router.options("/login", (req, res) => {
 router.head("/login", (req, res) => {
   // define os cabeçalhos de resposta HTTP
   res.set({
-    "Allow": "POST, OPTIONS",
+    "Allow": "POST,OPTIONS",
     "Content-Length": "0"
   });
   res.status(200).end();
