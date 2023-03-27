@@ -49,18 +49,6 @@ router.delete("/:id", verificarTokenETarefaDoUsuario, async (req, res) => {
   }
 });
 
-// Buscar tarefa por status
-
-router.get("/:status", verificarTokenETarefaDoUsuario, async (req, res) => {
-  try {
-    const tarefas = await Tarefa.find({ finalizado: req.params.status });
-    res.status(200).json({ tarefas });
-  } catch (erro) {
-    res.status(500).json({ mensagem: `${erro}` });
-  }
-});
-
-
 router.get("/info/admin", verificarTokenAdmin, async (req, res) => {
   try {
     const totalTarefas = await Tarefa.countDocuments();
