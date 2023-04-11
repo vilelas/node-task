@@ -21,10 +21,6 @@ PATCH	|``{{URL}}/api/usuarios/:id``	|Sim	|Sim	| Atualiza parcialmente as informa
 HEAD	|``{{URL}}/api/auth/login``	|Não	|Não	| Retorna apenas os cabeçalhos de uma solicitação, sem retornar o corpo da resposta.
 
 A referência ``{{URL}}`` presente na tabela acima se refere ao URL do servidor local utilizado como exemplo, que é ``http://localhost:5000``. Essa referência é usada para simplificar a escrita dos exemplos e torná-los mais claros e concisos.
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of 98f1908 (swagger)
 
 ## Autenticação
 Para autenticar na API, o usuário deve enviar um token JWT válido no cabeçalho de autorização da solicitação com o formato Bearer `token`. O token pode ser obtido fazendo login no sistema.
