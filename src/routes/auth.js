@@ -7,20 +7,17 @@ const Usuario = require("../models/Usuario");
 // Cadastro
 
 router.post("/register", async (req, res) => {
-  const { nome, email, senha, confirma_senha, admin } = req.body;
+  const { nome, email, senha, admin } = req.body;
 
-  if (!nome || !email || !senha || !admin || !confirma_senha) {
+  if (!nome || !email || !senha || !admin) {
     return res.status(422).json({ mensagem: "Dados ausentes" });
   }
 
-  if (senha !== confirma_senha) {
-    return res.status(422).json({ mensagem: "As senhas não conferem" });
-  }
-
+ 
   // checando se o usuário existe
   const existe = await Usuario.findOne({ email: email });
   if (existe) {
-    return res.status(422).json({ mensagem: "O e-mail já está em uso" });
+    return res.status(409).json({ mensagem: "O e-mail já está em uso" });
   }
 
   // criando a senha do usuário
@@ -52,7 +49,7 @@ router.post("/login", async (req, res) => {
   // Validação de dados
 
   if (!email || !senha) {
-    return res.status(422).json({ mensagem: "Credenciais inválidas" });
+    return res.status(400).json({ mensagem: "Credenciais inválidas" });
   }
 
   // checando se o usuário existe
