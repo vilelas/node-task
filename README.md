@@ -21,7 +21,10 @@ PATCH	|``{{URL}}/api/usuarios/:id``	|Sim	|Sim	| Atualiza parcialmente as informa
 HEAD	|``{{URL}}/api/auth/login``	|Não	|Não	| Retorna apenas os cabeçalhos de uma solicitação, sem retornar o corpo da resposta.
 
 A referência ``{{URL}}`` presente na tabela acima se refere ao URL do servidor local utilizado como exemplo, que é ``http://localhost:5000``. Essa referência é usada para simplificar a escrita dos exemplos e torná-los mais claros e concisos.
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 98f1908 (swagger)
 
 ## Autenticação
 Para autenticar na API, o usuário deve enviar um token JWT válido no cabeçalho de autorização da solicitação com o formato Bearer `token`. O token pode ser obtido fazendo login no sistema.
@@ -37,23 +40,23 @@ git clone https://github.com/vilelas/Node-Task.git
 
 2. Instale as dependências do projeto:
 
-```s
+```bash
 cd Node-Task
 npm i
 ```
 
 3. Crie um arquivo .env na raiz do projeto e configure as seguintes variáveis de ambiente:
 
-```s
+```bash
 MONGO_URL=mongodb://[username]:[password]@[host]:[port]/[database]
 SECRET=sua_hash_aleatoria
 ```
 
 4. Inicie o servidor:
 
-```s
+```bash
 npm start
 ```
 
 ## Licença
-Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](https://github.com/vilelas/Node-Task/blob/main/LICENSE) para mais detalhes.
+Este projeto está licenciado sob a Licença MIT.

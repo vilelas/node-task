@@ -1,15 +1,15 @@
 const express = require("express");
 const app = express();
 
-const auth = require("./routes/auth");
-const usuarios = require("./routes/usuario");
-const tarefas = require("./routes/tarefa");
+const authRoute = require("./routes/auth");
+const usuariosRoute = require("./routes/usuario");
+const tarefaRoute = require("./routes/tarefa");
 
 app.use(express.json());
 
 // Rotas
-app.use("/api/auth", auth);
-app.use("/api/usuarios", usuarios);
-app.use("/api/tarefas", tarefas);
+app.use("/api/auth", authRoute);
+app.use("/api/usuarios", usuariosRoute);
+app.use("/api/tarefas", tarefaRoute);
 
 module.exports = app;
