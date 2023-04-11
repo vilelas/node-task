@@ -1,0 +1,119 @@
+swagger: "2.0"
+info:
+  title: NodeTask
+  description: API para gerenciamento de tarefas
+  version: "1.0.0"
+host: localhost:5000
+basePath: /api
+schemes:
+  - http
+paths:
+  /tarefas/{id}:
+    put:
+      description: Atualiza os dados de uma tarefa específica
+      parameters:
+        - name: tarefa
+          in: body
+          description: Objeto Tarefa
+          schema:
+            $ref: "#/definitions/Tarefa"
+      responses:
+        "200":
+          description: OK
+      security:
+        - Bearer: []
+
+  /tarefas/new:
+    post:
+      description: Cria uma nova tarefa
+      parameters:
+        - name: tarefa
+          in: body
+          description: Objeto Tarefa
+          schema:
+            $ref: "#/definitions/Tarefa"
+      responses:
+        "201":
+          description: Created
+      security:
+        - Bearer: []
+
+  /auth/register:
+    post:
+      description: Registra um novo usuário
+      parameters:
+        - name: body
+          in: body
+          description: Dados do usuário
+          schema:
+            $ref: "#/definitions/Usuario"
+      responses:
+        "201":
+          description: Created
+      security: []
+
+  /auth/login:
+    post:
+      description: Realiza o login do usuário
+      parameters:
+        - name: body
+          in: body
+          description: Credenciais do usuário
+          schema:
+            $ref: "#/definitions/Credenciais"
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/securityDefinitions/Bearer"
+        "401":
+          description: Não autorizado
+      security: []
+
+definitions:
+  Tarefa:
+    type: object
+    properties:
+      usuarioId:
+        type: string
+        required: true
+      titulo:
+        type: string
+        required: true
+      descricao:
+        type: string
+        required: true
+      finalizado:
+        type: boolean
+
+  Usuario:
+    type: object
+    properties:
+      nome:
+        type: string
+        required: true
+      email:
+        type: string
+        required: true
+      senha:
+        type: string
+        required: true
+      admin:
+        type: boolean
+        default: false
+
+  Credenciais:
+    type: object
+    properties:
+      email:
+        type: string
+        required: true
+      senha:
+        type: string
+        required: true
+
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: token
+    in: header
