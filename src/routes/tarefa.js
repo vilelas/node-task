@@ -23,24 +23,30 @@ router.post("/new", verificarToken, async (req, res) => {
 
 // Atualizar tarefa
 
-router.put("/:id", verificarTokenETarefaDoUsuario, async (req, res) => {
-  try {
-    await Tarefa.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    );
-    res.status(200).json({ mensagem: "Dados atualizados com sucesso" });
-  } catch (erro) {
-    res.status(500).json({ mensagem: `${erro}` });
+router.put(
+  "/atualizar/:id",
+  verificarTokenETarefaDoUsuario,
+  async (req, res) => {
+    const id = req.params.id;
+
+    try {
+      await Tarefa.findByIdAndUpdate(
+        id,
+        {
+          $set: req.body,
+        },
+        { new: true }
+      );
+      res.status(200).json({ mensagem: "Dados atualizados com sucesso" });
+    } catch (erro) {
+      res.status(400).json({ mensagem: `${erro}` });
+    }
   }
-});
+);
 
 // Excluir
 
-router.delete("/:id", verificarTokenETarefaDoUsuario, async (req, res) => {
+router.delete("/excluir/:id", verificarTokenETarefaDoUsuario, async (req, res) => {
   try {
     await Tarefa.findByIdAndDelete(req.params.id);
     res.status(200).json({ mensagem: "Tarefa excluída com sucesso" });
