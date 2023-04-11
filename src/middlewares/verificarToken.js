@@ -1,3 +1,5 @@
+require("dotenv").config()
+
 const jwt = require("jsonwebtoken");
 const Tarefa = require("../models/Tarefa");
 
@@ -5,18 +7,20 @@ const verificarToken = (req, res, proximo) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
-  if (!token) return res.status(401).json({ msg: "Acesso negado!" });
-
-  try {
-    const secret = process.env.SECRET;
-
-    jwt.verify(token, secret);
-
-    proximo();
-  } catch (err) {
-    res.status(400).json({ msg: "O Token é inválido!" });
+  if (token) {
+    jwt.verify(token, process.env.SECRET, (erro, usuario) => {
+      if (erro) res
+        .status(403)
+        .json({
+          mensagem: "Você não tem autorização para acessar essa página",
+        });
+      req.usuario = usuario;
+      proximo();
+    });
+  } else {
+    return res.status(401).json({ mensagem: "Você não está autenticado" });
   }
-};
+}
 
 const verificarTokenEAutorizar = (req, res, proximo) => {
   verificarToken(req, res, () => {
@@ -24,7 +28,7 @@ const verificarTokenEAutorizar = (req, res, proximo) => {
       proximo();
     } else {
       res.status(403).json({
-        mensagem: "Você não está autorizado para acessar essa página",
+        mensagem: "Você não tem autorização para acessar essa página",
       });
     }
   });
@@ -36,7 +40,7 @@ const verificarTokenAdmin = (req, res, proximo) => {
       proximo();
     } else {
       res.status(403).json({
-        mensagem: "Você não está autorizado para acessar essa página",
+        mensagem: "Você não tem autorização para acessar essa página",
       });
     }
   });
@@ -50,7 +54,7 @@ const verificarTokenETarefaDoUsuario = async (req, res, proximo) => {
         proximo();
       } else {
         res.status(403).json({
-          mensagem: "Você não está autorizado para acessar essa página",
+          mensagem: "Você não tem autorização para acessar essa página",
         });
       }
     } catch (erro) {
