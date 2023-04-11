@@ -2,17 +2,19 @@ const jwt = require("jsonwebtoken");
 const Tarefa = require("../models/Tarefa");
 
 const verificarToken = (req, res, proximo) => {
-  const authHeader = req.headers.token;
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
 
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
-    jwt.verify(token, process.env.SECRET, (erro, usuario) => {
-      if (erro) res.status(403).json({ mensagem: "Token inválido" });
-      req.usuario = usuario;
-      proximo();
-    });
-  } else {
-    return res.status(401).json({ mensagem: "Você não está autenticado" });
+  if (!token) return res.status(401).json({ msg: "Acesso negado!" });
+
+  try {
+    const secret = process.env.SECRET;
+
+    jwt.verify(token, secret);
+
+    proximo();
+  } catch (err) {
+    res.status(400).json({ msg: "O Token é inválido!" });
   }
 };
 
