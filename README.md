@@ -12,27 +12,27 @@ Para executar a aplicação, siga os seguintes passos:
 
 1. Clone o repositório do GitHub:
 
-```s
+```bash
 git clone https://github.com/vilelas/Node-Task.git
 ```
 
 2. Instale as dependências do projeto:
 
-```s
+```js
 cd Node-Task
 npm i
 ```
 
 3. Crie um arquivo .env na raiz do projeto e configure as seguintes variáveis de ambiente:
 
-```s
+```js
 MONGO_URL=mongodb://[username]:[password]@[host]:[port]/[database]
 SECRET=sua_hash_aleatoria
 ```
 
 4. Inicie o servidor:
 
-```s
+```js
 npm start
 ```
 
