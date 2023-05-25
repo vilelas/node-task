@@ -1,7 +1,7 @@
 # NodeTask
 NodeTask é uma aplicação de lista de tarefas construída com Node.js e Express.js. Ele fornece endpoints HTTP RESTful para operações CRUD (criar, ler, atualizar e excluir) em tarefas, além de autenticação de usuário usando JWT (JSON Web Token).
 
-## Documentação (em construção)
+## Documentação
 A documentação da API pode ser acessada em ``/api-docs``. Lá, você encontrará informações detalhadas sobre todas as rotas disponíveis, bem como exemplos de solicitações e respostas. Certifique-se de verificar a documentação antes de usar a API para garantir que você está fazendo solicitações corretas e recebendo as respostas esperadas.
 
 ## Autenticação
