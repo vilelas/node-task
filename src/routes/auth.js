@@ -13,7 +13,6 @@ router.post("/register", async (req, res) => {
     return res.status(422).json({ mensagem: "Dados ausentes" });
   }
 
- 
   // checando se o usuário existe
   const existe = await Usuario.findOne({ email: email });
   if (existe) {
@@ -77,32 +76,12 @@ router.post("/login", async (req, res) => {
     );
 
     const { senha, ...info } = usuario._doc;
-    //res.status(200).json({ ...info, token });
 
-    res
-      .status(200)
-      .json({ mensagem: "login efetuado com sucesso!", cod: token });
+    res.status(200).json({ mensagem: "login efetuado com sucesso!", token });
   } catch (error) {
     console.log(error);
     res.status(500).json({ mensagem: "Erro no servidor!" });
   }
-});
-
-// Rota OPTIONS retorna as opções disponíveis para o recurso
-
-router.options("/login", (req, res) => {
-  res.header("Allow", "POST,OPTIONS").send();
-});
-
-// middleware para manipulação de solicitações HEAD
-
-router.head("/login", (req, res) => {
-  // define os cabeçalhos de resposta HTTP
-  res.set({
-    "Allow": "POST,OPTIONS",
-    "Content-Length": "0"
-  });
-  res.status(200).end();
 });
 
 module.exports = router;

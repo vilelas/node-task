@@ -55,7 +55,7 @@ router.delete("/excluir/:id", verificarTokenETarefaDoUsuario, async (req, res) =
   }
 });
 
-router.get("/info/admin", verificarTokenAdmin, async (req, res) => {
+router.get("/admin/info", verificarTokenAdmin, async (req, res) => {
   try {
     const totalTarefas = await Tarefa.countDocuments();
     const tarefasFinalizadas = await Tarefa.countDocuments({

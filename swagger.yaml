@@ -1,0 +1,322 @@
+openapi: 3.0.0
+info:
+  title: NodeTask
+  description: NodeTask é uma aplicação de lista de tarefas construída com Node.js e Express.js.
+  version: "1.0.0"
+  license:
+    name: MIT
+    url: https://github.com/vilelas/Node-Task/blob/main/LICENSE
+servers:
+  - url: http://localhost:5000/api
+paths:
+  /tarefas/admin/info:
+    get:
+      description: Retorna informações sobre as tarefas para usuários com perfil de administrador
+      tags: ["Tarefa"]
+      responses:
+        "200":
+          description: Informações das tarefas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalTarefas:
+                    type: integer
+                    description: Número total de tarefas no banco de dados
+                    example: 50
+                  tarefasFinalizadas:
+                    type: integer
+                    description: Número de tarefas finalizadas no banco de dados
+                    example: 25
+                  tarefasNaoFinalizadas:
+                    type: integer
+                    description: Número de tarefas não finalizadas no banco de dados
+                    example: 25
+        "401":
+          description: Você não está autenticado
+        "403":
+          description: Você não tem autorização para acessar essa página
+        "500":
+          description: Erro no servidor
+      security:
+        - BearerToken: []
+  /tarefas/atualizar/{id}:
+    put:
+      description: Atualiza os dados de uma tarefa no banco de dados
+      tags: ["Tarefa"]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Tarefa"
+      parameters:
+        - name: id
+          in: path
+          description: ID da tarefa a ser atualizada.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Dados atualizados com sucesso
+        "401":
+          description: Você não está autenticado
+        "403":
+          description: Você não tem autorização para acessar essa página
+        "404":
+          description: Tarefa não encontrada
+        "500":
+          description: Erro no servidor
+      security:
+        - BearerToken: []
+  /tarefas/excluir/{id}:
+    delete:
+      description: Exclui uma tarefa do banco de dados
+      tags: ["Tarefa"]
+      parameters:
+        - name: id
+          in: path
+          description: ID da tarefa a ser excluída.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Tarefa excluída com sucesso
+        "401":
+          description: Você não está autenticado
+        "403":
+          description: Você não tem autorização para acessar essa página
+        "404":
+          description: Tarefa não encontrada
+        "500":
+          description: Erro no servidor
+      security:
+        - BearerToken: []
+  /usuarios/excluir/{id}:
+    delete:
+      description: Exclui um usuário do banco de dados
+      tags: ["Usuário"]
+      parameters:
+        - name: id
+          in: path
+          description: ID do usuário a ser excluído.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Usuário excluído com sucesso
+        "401":
+          description: Você não está autenticado
+        "403":
+          description: Você não tem autorização para acessar essa página
+        "404":
+          description: Usuário não encontrado
+        "500":
+          description: Erro no servidor
+      security:
+        - BearerToken: []
+
+  /tarefas/new:
+    post:
+      description: Cria uma nova tarefa.
+      tags: ["Tarefa"]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Tarefa"
+      responses:
+        "201":
+          description: Tarefa cadastrada com sucesso
+        "401":
+          description: Você não está autenticado
+        "403":
+          description: Você não tem autorização para acessar essa página
+        "500":
+          description: Erro no servidor
+      security:
+        - BearerToken: []
+  
+  /buscar/{id}:
+    get:
+      description: Busca um usuário pelo ID
+      tags: ["Usuário"]
+      parameters:
+        - name: id
+          in: path
+          description: ID do usuário a ser buscado
+          required: true
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      responses:
+        '200':
+          description: Informações do usuário
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Usuario"
+        "403":
+          description: Você não tem autorização para acessar essa página
+        '404':
+          description: "Usuário não encontrado"
+    security:
+      - bearerAuth: []
+
+  /usuarios/atualizar/{id}:
+    put:
+      description: Atualiza os dados de um usuário no banco de dados
+      tags: ["Usuário"]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Usuario"
+      parameters:
+        - name: id
+          in: path
+          description: ID do usuario a ser atualizado.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Dados atualizados com sucesso
+        "401":
+          description: Você não está autenticado
+        "403":
+          description: Você não tem autorização para acessar essa página
+        "404":
+          description: Usuário não encontrado
+        "500":
+          description: Erro no servidor
+      security:
+        - BearerToken: []
+  
+  /admin/usuarios:
+    get:
+      description: Lista todos os usuários cadastrados no sistema
+      tags: ["Usuário"]
+      security:
+        - BearerToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Usuario"
+        "403":
+          description: Você não tem autorização para acessar essa página
+        "500":
+          description: Erro no servidor
+
+  /auth/register:
+    post:
+      description: Registra um novo usuário.
+      tags: ["Usuário"]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Usuario"
+      responses:
+        "201":
+          description: Usuário criado com sucesso!
+        "422":
+          description: Dados ausentes
+        "409":
+          description: O e-mail já está em uso
+        "500":
+          description: Erro no servidor
+
+      security: []
+
+  /auth/login:
+    post:
+      description: Realiza o login do usuário.
+      tags: ["Usuário"]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: E-mail do usuário
+                  example: usuario@email.com
+                  required: true
+                senha:
+                  type: string
+                  description: Senha do usuário
+                  example: minhasenha
+                  required: true
+      responses:
+        "200":
+          description: Login efetuado com sucesso!
+        "400":
+          description: Credenciais inválidas
+        "404":
+          description: Usuário não encontrado
+        "422":
+          description: Senha inválida
+        "500":
+          description: Erro no servidor
+
+      security: []
+components:
+  securitySchemes:
+    BearerToken:
+      type: apiKey
+      name: Authorization
+      in: header
+  schemas:
+    Tarefa:
+      type: object
+      properties:
+        usuarioId:
+          required: true
+          type: string
+          description: ID do usuário proprietário da tarefa.
+        titulo:
+          required: true
+          type: string
+          description: Título da tarefa.
+        descricao:
+          required: true
+          type: string
+          description: Descrição da tarefa.
+        finalizado:
+          required: true
+          type: boolean
+          description: Indica se a tarefa foi finalizada.
+    Usuario:
+      type: object
+      properties:
+        nome:
+          type: string
+          description: Nome do usuário.
+          required: true
+        email:
+          type: string
+          description: E-mail do usuário.
+          required: true
+        senha:
+          type: string
+          description: Senha do usuário.
+          required: true
+        admin:
+          type: boolean
+          description: Indica se o usuário é administrador.
+          default: false
